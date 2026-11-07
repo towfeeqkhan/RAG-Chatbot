@@ -10,6 +10,10 @@
 !.yarn/releases
 !.yarn/versions
 
+# Mastra local development & build outputs
+.mastra/
+dist/
+
 # testing
 /coverage
 
