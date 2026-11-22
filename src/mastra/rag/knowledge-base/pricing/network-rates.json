@@ -1,0 +1,66 @@
+{
+  "currency": "USD",
+  "applies_to": "All US states",
+  "notes": [
+    "Canadian rates are not included in this file.",
+    "Voltway does not use time-of-day pricing on the public network."
+  ],
+  "plans": [
+    {
+      "id": "pay-as-you-go",
+      "name": "Pay-as-you-go",
+      "monthly_fee_usd": 0,
+      "annual_price_usd": null,
+      "level2_rate_usd_per_kwh": 0.34,
+      "dc_fast_rate_usd_per_kwh": 0.52,
+      "idle_fee_grace_minutes": 10,
+      "priority_support": false,
+      "reserve_charger": false,
+      "launched": null
+    },
+    {
+      "id": "voltway-plus",
+      "name": "Voltway Plus",
+      "monthly_fee_usd": 9.99,
+      "annual_price_usd": 99,
+      "annual_note": "About 2 months free",
+      "level2_rate_usd_per_kwh": 0.26,
+      "dc_fast_rate_usd_per_kwh": 0.42,
+      "idle_fee_grace_minutes": 10,
+      "priority_support": false,
+      "reserve_charger": false,
+      "launched": "2023-01"
+    },
+    {
+      "id": "voltway-pro",
+      "name": "Voltway Pro",
+      "monthly_fee_usd": 24.99,
+      "annual_price_usd": 249,
+      "annual_note": "About 2 months free",
+      "level2_rate_usd_per_kwh": 0.20,
+      "dc_fast_rate_usd_per_kwh": 0.36,
+      "idle_fee_grace_minutes": 20,
+      "priority_support": true,
+      "priority_support_detail": "24/7 phone line, under 2 minute wait target",
+      "reserve_charger": true,
+      "reserve_charger_detail": "Up to 30 minutes ahead",
+      "launched": "2025-11"
+    }
+  ],
+  "idle_fee": {
+    "rate_usd_per_minute": 0.40,
+    "max_per_session_usd": 20,
+    "condition": "Charged only when the station is busy with other drivers waiting. Applies after the grace period."
+  },
+  "free_trial": {
+    "plan": "Voltway Plus",
+    "days": 30,
+    "card_required": false,
+    "eligibility": "New accounts"
+  },
+  "cancellation": {
+    "where": "In the app, anytime",
+    "monthly_plans": "End at the end of the billing period",
+    "annual_plans": "Refunded pro rata within the first 30 days only"
+  }
+}

@@ -1,0 +1,7 @@
+product,category,price_usd,warranty,max_power,breaker_required,notes
+Voltway Home Pro 2,Home charger,549,5 years parts and labor,11.5 kW,60-amp (240V),Hardwired. Free NACS adapter included. Supports load sharing.
+Voltway Home Lite,Home charger,349,3 years parts and labor,7.7 kW,40-amp (240V),Plug-in or hardwired. NACS adapter sold separately.
+Voltway Go,Portable charger,399,2 years parts only,7.7 kW at 240V / 1.4 kW at 120V,None (uses an outlet),Includes NEMA 5-15 and NEMA 14-50 adapters and a carry case. NACS adapter sold separately.
+NACS adapter (for Home Lite and Go),Accessory,49.00,,,,Home Pro 2 includes one in the box.
+Voltway RFID card,Accessory,0.00,,,,First card is free. Replacement card is $5.00.
+Standard professional installation,Service,199,,,,Flat fee. Includes mounting and wiring up to 25 feet from the breaker panel. Permits and panel upgrades not included. Extra $6.00 per foot over 25 feet.

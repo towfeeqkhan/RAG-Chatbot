@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:mastra": "mastra dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:ingestion": "tsx src/mastra/rag/test-ingestion.ts",
+    "test:retrieval": "tsx src/mastra/rag/test-retrieval.ts"
   },
   "dependencies": {
     "@ai-sdk/google": "^4.0.113",
@@ -18,6 +21,8 @@
     "@mastra/rag": "^2.7.2",
     "ai": "^7.0.164",
     "next": "16.4.5",
+    "papaparse": "^5.7.0",
+    "pdf-parse": "^2.4.5",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "zod": "^4.6.7"
@@ -25,11 +30,18 @@
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
+    "@types/papaparse": "^5.5.2",
+    "@types/pdf-parse": "^1.1.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.5",
+    "mastra": "^1.38.0",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
   }
 }

@@ -1,0 +1,52 @@
+{
+  "applies_to": ["Voltway Home Pro 2", "Voltway Home Lite"],
+  "general_reset": "Hold the charger button for 10 seconds, or turn the breaker off for 60 seconds then back on.",
+  "error_codes": [
+    {
+      "code": "E01",
+      "meaning": "Ground fault detected",
+      "light_pattern": "Solid red",
+      "fix": "Unplug the vehicle, wait 30 seconds, reconnect. If it repeats, call an electrician.",
+      "contact_support": false
+    },
+    {
+      "code": "E02",
+      "meaning": "Overcurrent",
+      "light_pattern": "Flashing red, 2 blinks",
+      "fix": "Check the breaker has not tripped. Reduce other loads on the circuit.",
+      "contact_support": false
+    },
+    {
+      "code": "E03",
+      "meaning": "Over-temperature",
+      "light_pattern": "Flashing red, 3 blinks",
+      "fix": "Move out of direct sun, let the unit cool 15 minutes.",
+      "contact_support": false
+    },
+    {
+      "code": "E04",
+      "meaning": "Wi-Fi connection lost",
+      "light_pattern": "Flashing yellow",
+      "fix": "Restart the router, then hold the charger button for 10 seconds to re-pair.",
+      "contact_support": false
+    },
+    {
+      "code": "E05",
+      "meaning": "Vehicle communication failure",
+      "light_pattern": "Flashing blue",
+      "fix": "Re-seat the connector and lock/unlock the car.",
+      "contact_support": false
+    },
+    {
+      "code": "E07",
+      "meaning": "Connector latch failure",
+      "light_pattern": "Alternating red and yellow",
+      "fix": "Do not use. Contact support.",
+      "contact_support": true
+    }
+  ],
+  "support": {
+    "email": "support@voltway.example",
+    "phone": "1-800-865-8929"
+  }
+}
