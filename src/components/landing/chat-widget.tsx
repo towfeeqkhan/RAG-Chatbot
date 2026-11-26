@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
 
 const starterPrompts = [
   "Which home charger works with a 40-amp breaker?",
@@ -47,6 +49,14 @@ function SendIcon() {
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [draft, setDraft] = useState("");
+  const chatBodyRef = useRef<HTMLDivElement>(null);
+  const { messages, sendMessage, status, error, setMessages, stop, clearError } =
+    useChat({
+      transport: new DefaultChatTransport({
+        api: "/api/chat",
+      }),
+    });
+  const isBusy = status === "submitted" || status === "streaming";
 
   useEffect(() => {
     if (!isOpen) return;
@@ -59,8 +69,26 @@ export default function ChatWidget() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen]);
 
+  useEffect(() => {
+    const chatBody = chatBodyRef.current;
+    if (isOpen && chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+  }, [error, isBusy, isOpen, messages]);
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    const text = draft.trim();
+    if (!text || isBusy) return;
+
+    void sendMessage({ text });
+    setDraft("");
+  }
+
+  function resetChat() {
+    stop();
+    setMessages([]);
+    clearError();
+    setDraft("");
   }
 
   return (
@@ -112,7 +140,7 @@ export default function ChatWidget() {
                   type="button"
                   aria-label="Reset chat"
                   title="Reset chat"
-                  onClick={() => setDraft("")}
+                  onClick={resetChat}
                 >
                   <ResetIcon />
                 </button>
@@ -127,7 +155,7 @@ export default function ChatWidget() {
               </div>
             </header>
 
-            <div className="chatBody">
+            <div className="chatBody" ref={chatBodyRef}>
               <div className="assistantMessage">
                 <span className="messageAvatar">v.</span>
                 <div>
@@ -139,23 +167,70 @@ export default function ChatWidget() {
                 </div>
               </div>
 
-              <div className="starterPrompts">
-                <p>Popular questions</p>
-                <div>
-                  {starterPrompts.map((prompt) => (
-                    <button
-                      type="button"
-                      key={prompt}
-                      onClick={() => setDraft(prompt)}
-                    >
-                      <span>{prompt}</span>
-                      <svg viewBox="0 0 18 18" aria-hidden="true">
-                        <path d="M4 9h9M10 5l4 4-4 4" />
-                      </svg>
-                    </button>
-                  ))}
-                </div>
+              <div aria-live="polite">
+                {messages.map((message) => {
+                  const text = message.parts
+                    .filter((part) => part.type === "text")
+                    .map((part) => part.text)
+                    .join("");
+
+                  if (!text) return null;
+
+                  if (message.role === "user") {
+                    return (
+                      <div className="chatEntry userMessage" key={message.id}>
+                        <div className="userBubble">{text}</div>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div className="chatEntry assistantMessage" key={message.id}>
+                      <span className="messageAvatar">v.</span>
+                      <div>
+                        <div className="assistantBubble">{text}</div>
+                        <span className="messageTime">Voltway Assistant</span>
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {isBusy && (
+                  <p className="chatStatus" role="status">
+                    Voltway Assistant is thinking...
+                  </p>
+                )}
+
+                {error && (
+                  <p className="chatError" role="alert">
+                    Sorry, the assistant couldn’t respond. Please try again.
+                  </p>
+                )}
               </div>
+
+              {messages.length === 0 && (
+                <div className="starterPrompts">
+                  <p>Popular questions</p>
+                  <div>
+                    {starterPrompts.map((prompt) => (
+                      <button
+                        type="button"
+                        key={prompt}
+                        onClick={() => {
+                          if (isBusy) return;
+                          void sendMessage({ text: prompt });
+                        }}
+                        disabled={isBusy}
+                      >
+                        <span>{prompt}</span>
+                        <svg viewBox="0 0 18 18" aria-hidden="true">
+                          <path d="M4 9h9M10 5l4 4-4 4" />
+                        </svg>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             <form className="chatComposer" onSubmit={handleSubmit}>
@@ -167,11 +242,12 @@ export default function ChatWidget() {
                   onChange={(event) => setDraft(event.target.value)}
                   placeholder="Ask about chargers, rates, or error codes..."
                   autoComplete="off"
+                  disabled={isBusy}
                 />
                 <button
                   type="submit"
                   aria-label="Send message"
-                  disabled={!draft.trim()}
+                  disabled={!draft.trim() || isBusy}
                 >
                   <SendIcon />
                 </button>

@@ -1636,6 +1636,27 @@ main > section[id] {
   gap: 8px;
 }
 
+.chatEntry + .chatEntry {
+  margin-top: 16px;
+}
+
+.userMessage {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.userBubble {
+  max-width: 85%;
+  padding: 12px 14px;
+  border-radius: 10px 10px 3px 10px;
+  background: var(--accent-primary);
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
 .messageAvatar {
   width: 30px;
   height: 30px;
@@ -1651,6 +1672,23 @@ main > section[id] {
   color: var(--text-primary);
   font-size: 13px;
   line-height: 1.55;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.chatStatus,
+.chatError {
+  margin: 14px 0 0 38px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.chatStatus {
+  color: var(--text-muted);
+}
+
+.chatError {
+  color: #b42318;
 }
 
 .messageTime {
@@ -1707,6 +1745,11 @@ main > section[id] {
   border-color: var(--border-strong);
   background: var(--bg-page);
   color: var(--text-primary);
+}
+
+.starterPrompts button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .starterPrompts button svg {
